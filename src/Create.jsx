@@ -15,7 +15,8 @@ function Create() {
     
     const handleSubmit = (event) => {
         event.preventDefault();
-        dispatch(addUser({id: users[users.length-1].id+1 , name: name, email: email}))
+        const nextId = users.reduce((highestId, user) => Math.max(highestId, user.id), 0) + 1;
+        dispatch(addUser({ id: nextId, name: name.trim(), email: email.trim() }));
         navigate('/')
     }
 
@@ -28,12 +29,14 @@ function Create() {
                         <div className="mb-3">
                             <label for="exampleInputName1" className="form-label">Name </label>
                             <input type="text" className="form-control" id="exampleInputName1"
-                                onChange={e => setName(e.target.value)} />
+                                onChange={e => setName(e.target.value)}
+                                required />
                         </div>
                         <div className="mb-3">
                             <label for="exampleInputEmail1" className="form-label">Email address</label>
                             <input type="email" className="form-control" id="exampleInputEmail1"
-                                onChange={e => setEmail(e.target.value)} />
+                                onChange={e => setEmail(e.target.value)}
+                                required />
                             <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
                         </div>
                         <button type="submit" className="btn btn-primary">Submit</button>

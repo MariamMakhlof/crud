@@ -9,7 +9,7 @@ import Update from './Update';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
         <Route path="/*" element={<MainLayOut />}>
           <Route index element={<Home />} />

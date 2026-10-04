@@ -1,52 +1,41 @@
 // createAsyncThunk,
 import { createSlice } from "@reduxjs/toolkit";
-import { userList } from "./Data";
+import { userList } from './Data';
 
-console.log(userList);
+const USER_STORAGE_KEY = 'crud-users';
 
-// const getUsers = createAsyncThunk('users/getUsers', (_, ThunkAPI) => {
-//     // Your async logic goes here
-// });
-// , loading: 'pending' 
+function loadUsers() {
+    try {
+        const savedUsers = window.localStorage.getItem(USER_STORAGE_KEY);
+        if (savedUsers) {
+            const parsedUsers = JSON.parse(savedUsers);
+            if (Array.isArray(parsedUsers)) return parsedUsers;
+        }
+    } catch {
+        // Use the sample users if browser storage is unavailable or invalid.
+    }
 
-// const initialState = { records: []};
+    return userList;
+}
 
 const userSlice = createSlice({
     name: 'users',
-    initialState: userList,
+    initialState: loadUsers(),
     reducers: {
         addUser: (state, action) => {
             state.push(action.payload)
         },
         updateUser: (state, action) => {
             const { id, name, email } = action.payload;
-            const ufind = state.find(user => user.id == id)
-            if (ufind) {
-                ufind.name = name;
-                ufind.email = email
+            const user = state.find((entry) => entry.id === Number(id));
+            if (user) {
+                user.name = name;
+                user.email = email;
             }
         },
-    deleteUser:  (state, action) =>{
-        const {id} = action.payload;
-        const ufind = state.find(user => user.id == id)
-        if (ufind){
-            return state.filter(f => f.id != id)
-        }
-        }
+        deleteUser: (state, action) =>
+            state.filter((user) => user.id !== Number(action.payload.id)),
     },
-    // extraReducers: (builder) => {
-    //     builder
-    //         .addCase(getUsers.pending, (state) => {
-    //             state.loading = 'pending';
-    //         })
-    //         .addCase(getUsers.fulfilled, (state, action) => {
-    //             state.loading = 'succeeded';
-    //             state.records = action.payload;
-    //         })
-    //         .addCase(getUsers.rejected, (state) => {
-    //             state.loading = 'failed';
-    //         });
-    // }
 });
 
 export const { addUser, updateUser, deleteUser } = userSlice.actions

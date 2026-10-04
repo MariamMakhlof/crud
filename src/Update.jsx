@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateUser } from './userReducer';
-import { eventWrapper } from '@testing-library/user-event/dist/utils';
 
 function Update() {
     const { id } = useParams();
     const users = useSelector((state) => state.users);    
-    const existUser = users.find(user => user.id == id);  // Find the user object by ID
+    const existUser = users.find((user) => user.id === Number(id));
     
     // Check if existUser is found, otherwise set default values
     const [uname, setName] = useState('');

@@ -1,17 +1,17 @@
     export const userList = [
         {
-            name: 'Mariam Makhlouf',
-            email: 'Mariam Makhlouf98@gmail.com',
+            name: 'Alex Johnson',
+            email: 'alex.johnson@example.com',
             id: 1
         },
         {
-            name: 'Aya Mahmoud',
-            email: 'Aya Mahmoud98@gmail.com',
+            name: 'Jamie Lee',
+            email: 'jamie.lee@example.com',
             id: 2
         },
         {
-            name: 'Amr Maymoun',
-            email: 'Amr Maymoun98@gmail.com',
+            name: 'Morgan Reed',
+            email: 'morgan.reed@example.com',
             id: 3
         },
     ]
